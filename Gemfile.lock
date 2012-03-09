@@ -35,6 +35,7 @@ GEM
       bson (= 1.6.0)
     builder (3.0.0)
     daemons (1.1.8)
+    database_cleaner (0.6.7)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -137,6 +138,7 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
+  database_cleaner
   devise
   haml-rails
   hpricot

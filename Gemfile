@@ -47,4 +47,5 @@ gem 'ruby_parser' # required by html2haml
 group :development, :test do
   gem 'rspec-rails'
   gem 'mongoid-rspec', :require => false
+  gem 'database_cleaner'
 end
