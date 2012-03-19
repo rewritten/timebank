@@ -1,0 +1,26 @@
+div.announcement {
+  border: solid 1px silver;
+  padding: 5px;
+}
+div.announcement h4 {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+div.announcement h4 span.title {
+  font-size: 120%;
+  color: navy;
+}
+div.announcement h4 span.by {
+}
+div.announcement h4 span.date {
+  font-style: italic;
+  color: gray;
+}
+div.announcement p {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+div.announcement p.tags {
+  text-align: right;
+}
+p.tags span {font-size: 90%; background: silver; padding: 1px 3px 1px 3px}

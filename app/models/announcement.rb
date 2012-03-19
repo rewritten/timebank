@@ -15,7 +15,6 @@ class Announcement
     where "conversations" => { "$elemMatch" => { "interlocutor_id" => user.id, "closed" => false }}
   end
 
-
   field :text, type: String
   field :fti, type: Array
   field :tags, type: Array

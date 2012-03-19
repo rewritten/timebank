@@ -1,15 +1,10 @@
 Timebank::Application.routes.draw do
   devise_for :users
 
-  resources :transaction_summaries
-
-  resources :account_statuses
+  resources :announcements
 
   resources :accounts
 
-  resources :account_types
-
-  resources :currencies
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

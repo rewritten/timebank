@@ -1,0 +1,14 @@
+.announcement
+  - splitted = announcement.text.split(" ", 4)
+  - body = splitted.pop
+  - title = splitted * " "
+  %h4
+    %span.title= title
+    (
+    %span.by= announcement.user
+    %span.date= l announcement.created_at.to_date
+    )
+  %p.tags
+    - announcement.tags_array.each do |tag|
+      %span= tag
+  %p= body

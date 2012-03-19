@@ -1,0 +1,14 @@
+%header
+  %h2 Announcements
+.colmask.doublepage
+  .colleft
+    .col1
+      %h3 Offers
+      - @offers.each do |offer|
+        = render 'announcement', announcement: offer
+
+    .col2
+      %h3 Requests
+      - @requests.each do |request|
+        = render 'announcement', announcement: request
+

@@ -44,6 +44,10 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+  
+  def to_s
+    email
+  end
 
   include Mongo::Voter
 end

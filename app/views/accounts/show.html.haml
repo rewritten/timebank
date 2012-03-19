@@ -11,17 +11,18 @@
 
 %header
   %h3 Transactions
-  %table
-    %thead
+%table
+  %thead
+    %tr
+      %th Date
+      %th Amount
+      %th From/To
+  %tbody
+    - (@account.transactions_from + @account.transactions_to).sort_by(&:created_at).reverse.each do |transaction|
+      - is_from = transaction.source_id == @account.id
       %tr
-        %th Date
-        %th Amount
-        %th From/To
-    - (@account.transactions_from + @account.transactions_to).sort_by(&:created_at).reverse.each do |t|
-      - is_from = t.source_id == @account.id
-      %tr
-        %td=t.created_at.to_s
-        %td=is_from ? -t.amount : t.amount
-        %td=is_from ? t.destination.user.email : t.source.user.email
+        %td=l transaction.created_at.to_date
+        %td=is_from ? -transaction.amount : transaction.amount
+        %td=is_from ? transaction.destination.user.email : transaction.source.user.email
 
   
