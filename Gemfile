@@ -56,9 +56,14 @@ gem 'twitter-bootstrap-rails'
 #   gem 'webrat'
 # end
 group :development, :test do
+  gem 'capistrano'
   gem 'rspec-rails'
   gem 'mongoid-rspec', :require => false
   gem 'database_cleaner'
   gem 'hpricot' # required by html2haml
   gem 'ruby_parser' # required by html2haml
+end
+
+group :production do
+  gem 'therubyracer'
 end

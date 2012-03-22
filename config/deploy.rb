@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 set :application, "timebank"
 set :repository,  "git@github.com:rewritten/timebank.git"
 
@@ -6,6 +8,7 @@ set :scm, :git
 set :deploy_to, "/home/bdt/deploy"
 set :user, "bdt"
 ssh_options[:forward_agent] = true
+default_run_options[:pty] = true
 
 role :web, "ns384078.ovh.net"                   # Your HTTP server, Apache/etc
 role :app, "ns384078.ovh.net"                   # This may be the same as your `Web` server

@@ -35,6 +35,12 @@ GEM
     bson_ext (1.6.0)
       bson (= 1.6.0)
     builder (3.0.0)
+    capistrano (2.11.2)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -66,6 +72,7 @@ GEM
       haml (~> 3.0)
       railties (~> 3.0)
     hashie (1.2.0)
+    highline (1.6.11)
     hike (1.2.1)
     hpricot (0.8.6)
     i18n (0.6.0)
@@ -98,6 +105,13 @@ GEM
     mongoid_taggable (0.1.7)
     multi_json (1.1.0)
     multipart-post (1.1.5)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.3.0)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
     oauth2 (0.5.2)
       faraday (~> 0.7)
       multi_json (~> 1.0)
@@ -188,6 +202,7 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
+  capistrano
   coffee-rails
   database_cleaner
   devise
@@ -203,6 +218,7 @@ DEPENDENCIES
   rspec-rails
   ruby_parser
   sass-rails
+  therubyracer
   thin
   twitter-bootstrap-rails
   voteable_mongo
