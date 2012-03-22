@@ -1,85 +1,68 @@
 class AnnouncementsController < ApplicationController
-  # GET /account_statuses
-  # GET /account_statuses.xml
-  def index
-    @offers = Announcement.offers
-    @requests = Announcement.requests
-    # @account_statuses = AccountStatus.all
-    # 
-    # respond_to do |format|
-    #   format.html # index.html.erb
-    #   format.xml  { render :xml => @account_statuses }
-    # end
+
+  before_filter :ensure_current_user, only: [:create, :update]
+  before_filter :user_is_user, except: :index
+
+  def user_is_user
+    unless current_user and not current_user.guest?
+      render nothing: true, status: 403
+    end
   end
 
-  # # GET /account_statuses/1
-  # # GET /account_statuses/1.xml
-  # def show
-  #   @account_status = AccountStatus.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     format.html # show.html.erb
-  #     format.xml  { render :xml => @account_status }
-  #   end
-  # end
-  # 
-  # # GET /account_statuses/new
-  # # GET /account_statuses/new.xml
-  # def new
-  #   @account_status = AccountStatus.new
-  # 
-  #   respond_to do |format|
-  #     format.html # new.html.erb
-  #     format.xml  { render :xml => @account_status }
-  #   end
-  # end
-  # 
-  # # GET /account_statuses/1/edit
-  # def edit
-  #   @account_status = AccountStatus.find(params[:id])
-  # end
-  # 
-  # # POST /account_statuses
-  # # POST /account_statuses.xml
-  # def create
-  #   @account_status = AccountStatus.new(params[:account_status])
-  # 
-  #   respond_to do |format|
-  #     if @account_status.save
-  #       format.html { redirect_to(@account_status, :notice => 'Account status was successfully created.') }
-  #       format.xml  { render :xml => @account_status, :status => :created, :location => @account_status }
-  #     else
-  #       format.html { render :action => "new" }
-  #       format.xml  { render :xml => @account_status.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  # 
-  # # PUT /account_statuses/1
-  # # PUT /account_statuses/1.xml
-  # def update
-  #   @account_status = AccountStatus.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     if @account_status.update_attributes(params[:account_status])
-  #       format.html { redirect_to(@account_status, :notice => 'Account status was successfully updated.') }
-  #       format.xml  { head :ok }
-  #     else
-  #       format.html { render :action => "edit" }
-  #       format.xml  { render :xml => @account_status.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  # 
-  # # DELETE /account_statuses/1
-  # # DELETE /account_statuses/1.xml
-  # def destroy
-  #   @account_status = AccountStatus.find(params[:id])
-  #   @account_status.destroy
-  # 
-  #   respond_to do |format|
-  #     format.html { redirect_to(account_statuses_url) }
-  #     format.xml  { head :ok }
-  #   end
-  # end
+  def ensure_current_user
+    params[:announcement][:user_id] = current_user.id unless current_user.admin?
+  end
+
+  def index
+    @announcements = Announcement.all.includes(:user)
+    @announcements = @announcements.tagged_with(params[:tag]) unless params[:tag].blank?
+    @announcements = @announcements.where type: params[:type] unless params[:type].blank?
+    @announcements = @announcements.where user_id: current_user.id unless params[:mine].blank? or not current_user
+    unless params[:with_me].blank? or not current_user
+      conversing_with_me = Conversation.where(interlocutor_id: current_user.id).only(:announcement_id).collect(&:announcement_id).uniq
+      @announcements = @announcements.any_in id: conversing_with_me
+    end
+    @announcements = @announcements.where type: params[:type] unless params[:type].blank?
+    
+    @tags = Announcement.tags
+    if request.xhr?
+      render partial: "announcement", layout: false, collection: @announcements 
+    end
+  end
+
+  def show
+    @announcement = Announcement.find(params[:id])
+  end
+
+  def new
+    @announcement = Announcement.new
+  end
+
+  def edit
+    @announcement = Announcement.find(params[:id])
+  end
+
+  def create
+    @announcement = Announcement.new(params[:announcement])
+    if @announcement.save
+      redirect_to(@announcement, :notice => 'Account status was successfully created.')
+    else
+      render :action => "new"
+    end
+  end
+
+  def update
+    @announcement = Announcement.find(params[:id])
+    if @announcement.update_attributes(params[:announcement])
+      redirect_to(@announcement, :notice => 'Account status was successfully updated.')
+    else
+      render :action => "edit"
+    end
+  end
+
+  def destroy
+    @announcement = Announcement.find(params[:id])
+    @announcement.destroy
+    redirect_to(announcements_url)
+  end
 end

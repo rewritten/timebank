@@ -1,0 +1,15 @@
+ul.nav li form {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+ul.nav li form input {
+  padding-bottom: 1px;
+  padding-top: 1px;
+}
+
+ul.nav img.face {
+  height: 32px;
+  width: 32px;
+  margin-top: 4px;
+}

@@ -1,0 +1,34 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.brand{:href => "/"} Banc del temps
+      %ul.nav
+        %li= link_to "Announcements", announcements_path
+        %li= link_to "Accounts", accounts_path
+      .nav-collapse
+        %ul.nav.pull-right
+          %li.divider-vertical
+          - if user_signed_in?
+            %li.dropdown
+              %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
+                %i.icon-user.icon-white
+                = current_user
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  %a{href: '#'}
+                    Role: 
+                    = current_user.role
+                %li
+                  %a{href: '#'}
+                    Balance:
+                    = current_user.balance_str
+                %li.divider
+                %li
+                  %a{href: destroy_user_session_path, :"data-method" => :delete, rel: "nofollow"}
+                    %i.icon-eject
+                    Sign out
+            = image_tag(current_user.face, :class => 'face')
+          - else
+            %li
+              = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)

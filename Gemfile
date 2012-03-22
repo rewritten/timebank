@@ -11,10 +11,14 @@ gem 'bson_ext'
 
 # auth
 gem 'devise'
+gem "omniauth-facebook"
 
 # model extras
 gem 'mongoid_taggable'
 gem 'voteable_mongo'
+
+
+gem 'rails_admin'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -34,9 +38,16 @@ gem 'voteable_mongo'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+
+# views and assets
+
 gem 'haml-rails'
-gem 'hpricot' # required by html2haml
-gem 'ruby_parser' # required by html2haml
+gem 'coffee-rails'
+gem 'sass-rails'
+gem 'jquery-rails'
+gem 'twitter-bootstrap-rails'
+
+
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -48,4 +59,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'mongoid-rspec', :require => false
   gem 'database_cleaner'
+  gem 'hpricot' # required by html2haml
+  gem 'ruby_parser' # required by html2haml
 end

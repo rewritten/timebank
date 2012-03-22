@@ -1,14 +1,14 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
   has_one :account
   has_many :announcements
-  
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable
+    :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   ## Database authenticatable
   field :email,              :type => String, :null => false, :default => ""
@@ -44,9 +44,69 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+
+  field :name, type: String
+  field :image, type: String
+  field :role, type: String, default: "Guest"
+
+  ROLES = %w(Guest User Admin God)
+
+  after_update :create_account
+
+  validates :role, inclusion: {:in => ROLES}
+
+  def create_account
+    self.account ||= Account.create!(user: self) unless guest?
+  end
+
+  def guest?
+    role.nil? or role.blank? or role == "Guest"
+  end
+
+  def god?
+    role == "God"
+  end
   
+  def admin?
+    god? or role == "Admin"
+  end
+
   def to_s
-    email
+    name || email
+  end
+
+  def balance_str
+    account.nil? ? "N/A" : "#{account.balance}h"
+  end
+
+  # cache the redirected image if any
+  def face
+    Rails.cache.fetch(image) do
+      Faraday.head(image).headers[:location] || image
+    end
+  end
+
+
+  # Facebook omniauth. See https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+
+  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
+    data = access_token.extra.raw_info
+    if user = User.where(email: data.email).first
+      user
+    else # Create a user with a stub password.
+      User.create!(email: data.email,
+                   name: data.name,
+                   image: access_token.info.image,
+                   password: Devise.friendly_token[0,20])
+    end
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"]
+      end
+    end
   end
 
   include Mongo::Voter

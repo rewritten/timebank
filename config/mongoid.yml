@@ -1,6 +1,7 @@
 development:
   host: localhost
   database: timebank_development
+  identity_map_enabled: true
 
 test:
   host: localhost

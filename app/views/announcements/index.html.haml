@@ -1,14 +1,66 @@
-%header
-  %h2 Announcements
-.colmask.doublepage
-  .colleft
-    .col1
-      %h3 Offers
-      - @offers.each do |offer|
-        = render 'announcement', announcement: offer
+- content_for :sidebar do
+  %h3 Sidebar
+  %a.btn{href: new_announcement_path}
+    %i.icon-plus
+    New Announcement
+  
+  %h3 Tags
+  
+  
+.page-header
+  %h1 
+    Announcements
+    %small Offers and requests
+.navbar
+  .navbar-inner
+    .container
+      %ul.nav
+        %li
+          %a{href: "?", :"data-remote" => true, :"data-replace" => '#announcements'}
+            %i.icon-list.icon-white
+            All
+        %li.dropdown
+          %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
+            %i.icon-arrow-right.icon-white
+            Type
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: "?type=offer", :"data-remote" => true, :"data-replace" => '#announcements'}
+                %i.icon-arrow-right
+                Offers
+            %li
+              %a{href: "?type=request", :"data-remote" => true, :"data-replace" => '#announcements'}
+                %i.icon-arrow-left
+                Requests
+        %li.dropdown
+          %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
+            %i.icon-user.icon-white
+            Status
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              %a{href: "?mine=1", :"data-remote" => true, :"data-replace" => '#announcements'}
+                %i.icon-user
+                Mine
+            %li
+              %a{href: "?with_me=1", :"data-remote" => true, :"data-replace" => '#announcements'}
+                %i.icon-align-left
+                Conversating
 
-    .col2
-      %h3 Requests
-      - @requests.each do |request|
-        = render 'announcement', announcement: request
-
+        
+        %li.dropdown
+          %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
+            %i.icon-tags.icon-white
+            Tags
+            %b.caret
+          %ul.dropdown-menu
+            - Announcement.tags_with_weight.sort.each do |(tag, wt)|
+              %li
+                %a{href: "?tag=#{tag}", :"data-remote" => true, :"data-replace" => '#announcements'}
+                  %i.icon-tag
+                  = "#{tag} (#{wt.to_i})"
+      %form.navbar-search.pull-right
+        %input.search-query{type: "text", placeholder: "Search"}
+.row#announcements
+  = render collection: @announcements, partial: :announcement

@@ -1,0 +1,15 @@
+%table
+  %thead
+    %tr
+      %th Title
+      %th User
+      %th Created
+  %tbody
+    - list.each do |item|
+      %tr
+        %td= link_to snippet(item.text), item
+        %td= item.user
+        %td= l item.created_at.to_date
+        - if current_user.admin? or item.user == current_user
+          %td= link_to '✘', item, :confirm => 'Are you sure?', :method => :delete
+

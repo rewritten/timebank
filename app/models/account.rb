@@ -4,6 +4,7 @@ class Account
 
   field :balance, type: Integer, default: 0 # account balance in seconds
   field :last_update_balance, type: DateTime, default: nil
+  field :label, type: String, default: ""
   belongs_to :user
   has_many :transactions_from, class_name: "Transaction", inverse_of: :source
   has_many :transactions_to, class_name: "Transaction", inverse_of: :destination
@@ -16,6 +17,14 @@ class Account
       ).map(&:amount).inject(0, :+)
     end.inject(:-)
     update_attributes last_update_balance: up_to, balance: balance + delta
+  end
+  
+  def to_s
+    user ? "User #{user}" : "Special #{label}"
+  end
+
+  def special?
+    user.nil?
   end
 
 end

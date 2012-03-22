@@ -17,11 +17,10 @@ class Announcement
 
   field :text, type: String
   field :fti, type: Array
-  field :tags, type: Array
   field :type, type: String
   belongs_to :user
 
-  embeds_many :conversations
+  has_many :conversations
 
   # set points for each vote
   voteable self, up: +1, down: -1

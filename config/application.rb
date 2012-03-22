@@ -1,5 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
+require 'yaml'
+APP_CONFIG = (YAML.load(File.read(File.expand_path('../app_config.yml', __FILE__))) rescue {})
+PRIVATE_CONFIG = (YAML.load(File.read(File.expand_path('../private_config.yml', __FILE__))) rescue {})
+
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
@@ -42,9 +46,15 @@ module Timebank
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+
     # Enable the asset pipeline
     config.assets.enabled = true
-    
+
+    config.generators do |g|
+      g.template_engine :haml
+      g.test_framework  :rspec
+      g.orm             :mongoid
+    end
+
   end
 end
