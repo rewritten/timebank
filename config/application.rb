@@ -49,6 +49,9 @@ module Timebank
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.compress = true
+    config.assets.css_compressor = :yui
+    config.assets.js_compressor = :uglifier
 
     config.generators do |g|
       g.template_engine :haml

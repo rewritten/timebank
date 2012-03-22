@@ -66,4 +66,6 @@ end
 
 group :production do
   gem 'therubyracer'
+  gem 'yui-compressor'
+  gem 'uglifier'
 end
