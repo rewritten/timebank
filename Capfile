@@ -8,10 +8,10 @@ load 'config/deploy' # remove this line to skip loading any of the default tasks
 
 desc "Uploads CHANGELOG.txt to all remote servers."
 task :upload_private_config do
-  upload(File.expand_path('../config/private_config.yml', __FILE__), "#{current_path}/config/private_config.yml")
+  upload(File.expand_path('../config/private_config.yml', __FILE__), "#{release_path}/config/private_config.yml")
 end
 
-before "deploy:restart", "deploy:upload_private_config"
+after "deploy:update_code", "deploy:upload_private_config"
 
 
 namespace :deploy do
