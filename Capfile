@@ -11,7 +11,7 @@ task :upload_private_config do
   upload(File.expand_path('../config/private_config.yml', __FILE__), "#{release_path}/config/private_config.yml")
 end
 
-after "deploy:update_code", "deploy:upload_private_config"
+after "deploy:update_code", "upload_private_config"
 
 
 namespace :deploy do
