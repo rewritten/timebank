@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  load_and_authorize_resource
+
   # GET /users
   # GET /users.json
   def index
@@ -49,10 +52,10 @@ class UsersController < ApplicationController
     unless @user.password
       @user.password = @user.password_confirmation = Devise.friendly_token
     end
-    
+
     require 'pp'
     pp @user
-    
+
 
     respond_to do |format|
       if @user.save

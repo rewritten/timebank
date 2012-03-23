@@ -25,20 +25,21 @@
               %a{href: "?type=request", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-arrow-left
                 Requests
-        %li.dropdown
-          %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
-            %i.icon-user.icon-white
-            Status
-            %b.caret
-          %ul.dropdown-menu
-            %li
-              %a{href: "?mine=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
-                %i.icon-user
-                Mine
-            %li
-              %a{href: "?with_me=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
-                %i.icon-align-left
-                Conversating
+        - if can? :participate, Conversation
+          %li.dropdown
+            %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
+              %i.icon-user.icon-white
+              Status
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: "?mine=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
+                  %i.icon-user
+                  Mine
+              %li
+                %a{href: "?with_me=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
+                  %i.icon-align-left
+                  Conversating
 
         
         %li.dropdown
@@ -54,9 +55,10 @@
                   = "#{tag} (#{wt.to_i})"
       %form.navbar-search
         %input.search-query{type: "text", placeholder: "Search"}
-      %a.btn.btn-success.pull-right{href: new_announcement_path}
-        %i.icon-plus
-        New Announcement
+      - if can? :create, Announcement
+        %a.btn.btn-success.pull-right{href: new_announcement_path}
+          %i.icon-plus
+          New Announcement
       
 .row#announcement-list
   = render collection: @announcements, partial: :announcement

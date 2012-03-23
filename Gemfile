@@ -12,6 +12,7 @@ gem 'bson_ext'
 # auth
 gem 'devise'
 gem "omniauth-facebook"
+gem "cancan"
 
 # model extras
 gem 'mongoid_taggable'

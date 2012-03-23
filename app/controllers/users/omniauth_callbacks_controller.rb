@@ -1,7 +1,10 @@
 # Authentication with facebook
 # see: https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
-# 
+#
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
+  skip_authorization_check
+
   def facebook
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
     if @user.persisted?

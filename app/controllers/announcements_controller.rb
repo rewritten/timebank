@@ -1,13 +1,8 @@
 class AnnouncementsController < ApplicationController
 
-  before_filter :ensure_current_user, only: [:create, :update]
-  before_filter :user_is_user, except: :index
+  load_and_authorize_resource
 
-  def user_is_user
-    unless current_user and not current_user.guest?
-      render nothing: true, status: 403
-    end
-  end
+  before_filter :ensure_current_user, only: [:create, :update]
 
   def ensure_current_user
     params[:announcement][:user_id] = current_user.id unless current_user.admin?
@@ -23,10 +18,10 @@ class AnnouncementsController < ApplicationController
       @announcements = @announcements.any_in id: conversing_with_me
     end
     @announcements = @announcements.where type: params[:type] unless params[:type].blank?
-    
+
     @tags = Announcement.tags
     if request.xhr?
-      render partial: "announcement", layout: false, collection: @announcements 
+      render partial: "announcement", layout: false, collection: @announcements
     end
   end
 
