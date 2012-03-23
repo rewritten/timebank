@@ -4,6 +4,8 @@ Timebank::Application.routes.draw do
   resources :announcements
 
   resources :accounts
+  
+  resources :users
 
 
   # The priority is based upon order of creation:

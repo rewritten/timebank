@@ -1,0 +1,38 @@
+%section#announcements
+.page-header
+  %h1 
+    Users
+    %small The good, the bad and the ugly
+.navbar
+  .navbar-inner
+    .container
+      %ul.nav
+        %li{:class => ("active" if params.values_at(:role, :q).empty?)}
+          %a{href: "?"}
+            %i.icon-list.icon-white
+            All
+        - User::ROLES.each do |r|
+          %li{:class => ("active" if params["role"] == r)}
+            %a{href: "?role=#{r}"}
+              / %a{href: "?role=#{r}", :"data-remote" => true, :"data-replace" => '#user-list'}
+              %i.icon-user.icon-white
+              = r.to_s.capitalize
+
+      %form.navbar-search{action: ''}
+        %input.search-query{type: "text", placeholder: "Search", name: "q", value: params["q"]}
+      / %a.btn.btn-success.pull-right{href: new_user_path}
+      /   %i.icon-plus
+      /   New User
+      
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th E-Mail
+      %th Role
+      %th
+      %th
+      %th
+  %tbody#user-list
+    = render collection: @users, partial: "user_row"
+

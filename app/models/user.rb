@@ -7,16 +7,23 @@ class User
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable, :omniauthable
-
+  devise(
+    :database_authenticatable,
+    :registerable,
+    # :recoverable,
+    :rememberable,
+    :trackable,
+    :validatable,
+    :omniauthable
+  )
+  
   ## Database authenticatable
   field :email,              :type => String, :null => false, :default => ""
   field :encrypted_password, :type => String, :null => false, :default => ""
 
-  ## Recoverable
-  field :reset_password_token,   :type => String
-  field :reset_password_sent_at, :type => Time
+  # ## Recoverable
+  # field :reset_password_token,   :type => String
+  # field :reset_password_sent_at, :type => Time
 
   ## Rememberable
   field :remember_created_at, :type => Time
@@ -48,8 +55,12 @@ class User
   field :name, type: String
   field :image, type: String
   field :role, type: String, default: "Guest"
+  field :info, type: String
+  field :notes, type: String
 
-  ROLES = %w(Guest User Admin God)
+  ROLES = %w(Guest User Admin)
+
+  ADMIN = PRIVATE_CONFIG[Rails.env]["admin"] rescue []
 
   after_update :create_account
 
@@ -63,12 +74,8 @@ class User
     role.nil? or role.blank? or role == "Guest"
   end
 
-  def god?
-    role == "God"
-  end
-  
   def admin?
-    god? or role == "Admin"
+    ADMIN.include? email or role == "Admin"
   end
 
   def to_s
@@ -97,7 +104,8 @@ class User
       User.create!(email: data.email,
                    name: data.name,
                    image: access_token.info.image,
-                   password: Devise.friendly_token[0,20])
+                   password: Devise.friendly_token[0,20],
+                   info: YAML.dump(access_token))
     end
   end
 

@@ -1,12 +1,4 @@
-- content_for :sidebar do
-  %h3 Sidebar
-  %a.btn{href: new_announcement_path}
-    %i.icon-plus
-    New Announcement
-  
-  %h3 Tags
-  
-  
+%section#announcements
 .page-header
   %h1 
     Announcements
@@ -16,7 +8,7 @@
     .container
       %ul.nav
         %li
-          %a{href: "?", :"data-remote" => true, :"data-replace" => '#announcements'}
+          %a{href: "?", :"data-remote" => true, :"data-replace" => '#announcement-list'}
             %i.icon-list.icon-white
             All
         %li.dropdown
@@ -26,11 +18,11 @@
             %b.caret
           %ul.dropdown-menu
             %li
-              %a{href: "?type=offer", :"data-remote" => true, :"data-replace" => '#announcements'}
+              %a{href: "?type=offer", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-arrow-right
                 Offers
             %li
-              %a{href: "?type=request", :"data-remote" => true, :"data-replace" => '#announcements'}
+              %a{href: "?type=request", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-arrow-left
                 Requests
         %li.dropdown
@@ -40,11 +32,11 @@
             %b.caret
           %ul.dropdown-menu
             %li
-              %a{href: "?mine=1", :"data-remote" => true, :"data-replace" => '#announcements'}
+              %a{href: "?mine=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-user
                 Mine
             %li
-              %a{href: "?with_me=1", :"data-remote" => true, :"data-replace" => '#announcements'}
+              %a{href: "?with_me=1", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-align-left
                 Conversating
 
@@ -57,10 +49,14 @@
           %ul.dropdown-menu
             - Announcement.tags_with_weight.sort.each do |(tag, wt)|
               %li
-                %a{href: "?tag=#{tag}", :"data-remote" => true, :"data-replace" => '#announcements'}
+                %a{href: "?tag=#{tag}", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                   %i.icon-tag
                   = "#{tag} (#{wt.to_i})"
-      %form.navbar-search.pull-right
+      %form.navbar-search
         %input.search-query{type: "text", placeholder: "Search"}
-.row#announcements
+      %a.btn.btn-success.pull-right{href: new_announcement_path}
+        %i.icon-plus
+        New Announcement
+      
+.row#announcement-list
   = render collection: @announcements, partial: :announcement

@@ -1,0 +1,12 @@
+%tr
+  %td= user_row.name
+  %td= user_row.email
+  %td= user_row.role
+  / %td= link_to 'Show', user_row
+  %td
+    %i.icon-pencil
+    = link_to 'Edit', edit_user_path(user_row)
+  %td
+    - unless user_row.admin?
+      %i.icon-remove
+      = link_to 'Destroy', user_row, :confirm => 'Are you sure?', :method => :delete

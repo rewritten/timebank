@@ -7,11 +7,12 @@
     = csrf_meta_tag
   %body
     = render "shared/navbar"
-    .row
-      .span3
-        - if content_for?(:sidebar)
-          = yield :sidebar
-        - else
-          %h3 Common sidebar
-      .span9
+    .container
+      - if content_for?(:sidebar)
+        .row
+          .span3
+            = yield :sidebar
+          .span9
+            = yield
+      - else
         = yield
