@@ -30,7 +30,7 @@ class Ability
   end
   
   def authorize!(*args)
-    puts "Ability.authorize! #{args.inspect}"
+    puts "Ability.authorize! #{args.inspect}" if Rails.env.development?
     super
   end
   
