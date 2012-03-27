@@ -34,4 +34,8 @@ class Announcement
     self.fti = text.split(/[^[:word:]]+/).map(&Unaccent.method(:unaccent))
   end
 
+  def title
+    text.split(". ", 2)[0]
+  end
+
 end

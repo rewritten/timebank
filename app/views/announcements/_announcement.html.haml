@@ -1,8 +1,5 @@
 .span3
   %label
-    - splitted = announcement.text.split(" ", 4)
-    - body = splitted.pop
-    - title = splitted * " "
     %h3
       - if announcement.type == 'offer'
         %span.badge.badge-success
@@ -10,13 +7,13 @@
       - else
         %span.badge.badge-info
           %i.icon-arrow-left.icon-white
-      = title
+      = announcement.title
     %span.label
       %i.icon-tags
       - announcement.tags_array.each do |tag|
         = tag
     %br
-    %p{:style => "max-height: 57px; overflow: hidden"}
+    %p
       = announcement.text
     %small
       = announcement.user
