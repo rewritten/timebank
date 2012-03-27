@@ -5,7 +5,7 @@ class Announcement
   include Mongoid::Paranoia
   include Mongoid::Timestamps
   include Mongo::Voteable
-  include Mongoid::Taggable
+  # include Mongoid::Taggable
 
   TYPES = %w(offer request)
 

@@ -15,7 +15,20 @@ gem "omniauth-facebook"
 gem "cancan"
 
 # model extras
-gem 'mongoid_taggable'
+
+# see: https://github.com/nofxx/symbolize
+gem "symbolize", :require => "symbolize/mongoid"
+
+# gem 'mongoid_taggable'
+
+# add "published_at" field, and some related scopes and methods
+# see: https://github.com/thetron/mongoid_publishable
+# gem 'mongoid_publishable'
+
+
+# see: https://github.com/mgolovnia/mongoid_commentable
+gem 'mongoid_commentable'
+
 gem 'voteable_mongo'
 
 
