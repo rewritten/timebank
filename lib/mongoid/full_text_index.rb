@@ -19,6 +19,9 @@
 # The reduce function is applied also to the scope arguments, so they are 
 # matched whatever their unreduced form
 #
+
+require 'unaccent'
+
 module Mongoid
   module FullTextIndex
     extend ActiveSupport::Concern
@@ -47,6 +50,13 @@ module Mongoid
       t = send(text_index_on).split(word_split)
       self.full_text_index = self.class.reduce_words(t)
     end
+    
+    def as_json(options={})
+      options[:except] ||= []
+      options[:except] << :full_text_index unless options[:except].include? :full_text_index
+      super(options)
+    end
+    
 
     module ClassMethods
       

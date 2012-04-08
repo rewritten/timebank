@@ -10,18 +10,17 @@ class AnnouncementsController < ApplicationController
 
   def index
     @announcements = Announcement.all.includes(:user)
-    @announcements = @announcements.tagged_with(params[:tag]) unless params[:tag].blank?
-    @announcements = @announcements.where type: params[:type] unless params[:type].blank?
+    @announcements = @announcements.tagged_with(params[:tag]) if params[:tag].present?
+    @announcements = @announcements.send params[:type].to_sym if params[:type].present?
     @announcements = @announcements.where user_id: current_user.id unless params[:mine].blank? or not current_user
     unless params[:with_me].blank? or not current_user
       conversing_with_me = Conversation.where(interlocutor_id: current_user.id).only(:announcement_id).collect(&:announcement_id).uniq
       @announcements = @announcements.any_in id: conversing_with_me
     end
-    @announcements = @announcements.where type: params[:type] unless params[:type].blank?
 
     @tags = Announcement.tags
     if request.xhr?
-      render partial: "announcement", layout: false, collection: @announcements
+      render partial: "announcement_row", layout: false, collection: @announcements
     end
   end
 

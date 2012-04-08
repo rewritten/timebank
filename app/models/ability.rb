@@ -10,6 +10,7 @@ class Ability
     elsif not user.guest?
       can :manage, Announcement
       can :participate, Conversation
+      can :see, :author
     else
       can :read, Announcement
     end

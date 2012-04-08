@@ -40,5 +40,13 @@ module Mongoid
       update_attributes published_at: nil
     end
 
+    def as_json(options={})
+      [:scheduled?, :published?, :draft?].inject(super(options)) do |h, flag|
+        h.update flag => self.send(flag)
+      end
+    end
+    
+
+
   end
 end

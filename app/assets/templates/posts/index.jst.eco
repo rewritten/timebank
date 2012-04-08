@@ -1,3 +1,74 @@
+<section id="posts">
+  <div class="page-header">
+    <h1>
+      Posts
+      <small>Offers and requests</small>
+    </h1>
+  </div>
+</section>
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <ul class="nav">
+        <li>
+          <a href="?" data-remote data-replace="#post-list">
+            <i class="icon-list icon-white"/>
+            All
+          </a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+            <i class="icon-arrow-right icon-white"/>
+            Type
+            <b class="caret"/>
+          </a>
+          <ul class="dropdown-menu">
+            <% for typ in ["offer", "request"]: %>
+            <li><a href="#posts?type=<%= typ %>"><%= typ %></a></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+  
+</div>
+
+
+
+
+
+<div class="row">
+<% for post in @posts.models: %>
+  <div class="span3">
+    <label>
+      <h3>
+        <% if post.get('type') == 'offer': %>
+          <span class="label label-success">offer</span>
+        <% else: %>
+          <span class="label label-info">request</span>
+        <% end %>
+        <%= post.get('title') %>
+      </h3>
+      <span class="label">
+        <i class="icon-tags"/>
+        <%= post.get('tags_array').join(" ") %>
+      </span>
+      <br/>
+      <p>
+        <%= post.get('content') %>
+      </p>
+      <small>
+        <%= post.get('author_name') %>
+        <%= post.get('created_at') %>
+      </small>
+    </label>
+  </p>
+  </div>
+<% end %>
+</div>
+
 %section#announcements
 .page-header
   %h1 
@@ -60,16 +131,5 @@
           %i.icon-plus
           New Announcement
       
-.row
-  .span12
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Type
-          %th Tags
-          %th Title
-          - if can? :see, :author
-            %th Author
-          %th Created
-      %tbody#announcement-list
-        = render collection: @announcements, partial: "announcements/announcement_row"
+.row#announcement-list
+  = render collection: @announcements, partial: :announcement

@@ -14,6 +14,9 @@ gem 'devise'
 gem "omniauth-facebook"
 gem "cancan"
 
+# backbone
+gem 'backbone-on-rails'
+
 # model extras
 
 # see: https://github.com/nofxx/symbolize

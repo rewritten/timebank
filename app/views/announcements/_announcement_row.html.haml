@@ -1,0 +1,21 @@
+%tr
+  %td
+    - if announcement_row.type == :offer
+      %span.badge.badge-success
+        = announcement_row.type
+    - else
+      %span.badge.badge-info
+        = announcement_row.type
+  %td
+    %span.label
+      - if announcement_row.tags_array.present?
+        %i.icon-tags
+        - announcement_row.tags_array.each do |tag|
+          = tag
+  %td{style: "width: 50%;"}
+    = announcement_row.title
+  - if can? :see, :author
+    %td
+      = announcement_row.user_name
+  %td
+    = l announcement_row.created_at.to_date

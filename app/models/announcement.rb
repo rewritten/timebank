@@ -1,41 +1,41 @@
-require 'unaccent'
+require 'mongoid/autotitle'
+require 'mongoid/denormalize'
+require 'mongoid/full_text_index'
+require 'mongoid/none'
+require 'mongoid/publishable'
+require 'mongoid/taggable'
 
 class Announcement
   include Mongoid::Document
   include Mongoid::Paranoia
   include Mongoid::Timestamps
+  include Mongoid::Symbolize
+  
   include Mongo::Voteable
-  # include Mongoid::Taggable
 
-  TYPES = %w(offer request)
+  include Mongoid::Autotitle
+  include Mongoid::Denormalize
+  include Mongoid::FullTextIndex
+  include Mongoid::Publishable
+  include Mongoid::Taggable
+  include Mongoid::None
 
-  scope :offers, where(type: "offer")
-  scope :requests, where(type: "request")
+  symbolize :type, within: [:offer, :request], allow_blank: false,
+    scopes: true, methods: true
+
+  autotitle on: :text
+  full_text_index on: :text
+
   scope :open, ->(user) do
     where "conversations" => { "$elemMatch" => { "interlocutor_id" => user.id, "closed" => false }}
   end
 
-  field :text, type: String
-  field :fti, type: Array
-  field :type, type: String
   belongs_to :user
-
+  denormalize :name, from: :user
+  
   has_many :conversations
 
   # set points for each vote
   voteable self, up: +1, down: -1
-
-  before_save :create_full_text_index
-
-  validates :type, :inclusion => {:in => TYPES,
-                                  :message => "%{value} must be one of #{TYPES.map(&:inspect) * ', '}"}
-
-  def create_full_text_index
-    self.fti = text.split(/[^[:word:]]+/).map(&Unaccent.method(:unaccent))
-  end
-
-  def title
-    text.split(". ", 2)[0]
-  end
 
 end
