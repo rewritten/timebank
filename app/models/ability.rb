@@ -16,6 +16,8 @@ class Ability
       can :destroy, Announcement do |announcement|
         announcement.try(:user) == user
       end
+      can :read, Transaction
+      can :create, Transaction
       can :see, :author
     else
       can :read, Announcement

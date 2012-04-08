@@ -16,21 +16,16 @@
   %p
     %i.icon-tags 
     = announcement.tags_array.join ", "
-  %p
-    - if can? :edit, announcement
+  - if can? :edit, announcement
+    %p
       %a.btn.btn-warning{href: edit_announcement_path(announcement.id)}
         %i.icon-pencil
         Edit
-    - if can? :delete, announcement
+  - if can? :delete, announcement
+    %p
       %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => "Are you sure?", "data-method" => "delete"}
         %i.icon-remove
         Delete
-  %form.well.form-inline{action: new_announcement_transaction_path(announcement_id: announcement.id)}
-    - if announcement.type == :offer
-      Pay
-    - else
-      Ask
-    %label.text
-      %input.input-small{type: :text, name: :amount, placeholder: "Amount"}
-      hours
-    %input.btn.btn-success{type: :submit}
+  = form_for [announcement, Transaction.new()], html: {:class => "form-inline"} do |f|
+    = f.text_field :amount, placeholder: "hours", :class => "input-small"
+    = f.submit value: (announcement.type == :offer ? "Pay" : "Ask"), :class => "btn btn-success"
