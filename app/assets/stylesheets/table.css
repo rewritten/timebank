@@ -1,5 +1,0 @@
-
-thead tr  { font-weight: bold }
-tbody tr:nth-child(odd)    { background-color:#eee; }
-tbody tr:nth-child(even)    { background-color:#fff; }
-

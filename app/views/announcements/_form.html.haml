@@ -16,7 +16,7 @@
     .control-group
       = f.label :type, :class => "control-label"
       .controls
-        = f.select :type, Announcement::TYPES
+        = f.select :type, Announcement::TYPE_VALUES
 
     .control-group
       = f.label :text, :class => "control-label"

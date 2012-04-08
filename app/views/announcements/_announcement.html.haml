@@ -1,15 +1,24 @@
-%table
-  %thead
-    %tr
-      %th Title
-      %th User
-      %th Created
-  %tbody
-    - list.each do |item|
-      %tr
-        %td= link_to snippet(item.text), item
-        %td= item.user
-        %td= l item.created_at.to_date
-        - if current_user.admin? or item.user == current_user
-          %td= link_to '✘', item, :confirm => 'Are you sure?', :method => :delete
-
+.span6
+  %h1
+    = announcement.title
+  %p
+    = announcement.text
+.span4
+  %p
+    %i.icon-user
+    = announcement.user_name
+  %p
+    %i.icon-calendar
+    = l announcement.created_at.to_date
+  %p
+    %i.icon-tags 
+    = announcement.tags_array.join ", "
+  %p
+    - if can? :edit, announcement
+      %a.btn.btn-warning{href: edit_announcement_path(announcement.id)}
+        %i.icon-pencil
+        Edit
+    - if can? :delete, announcement
+      %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => "Are you sure?", "data-method" => "delete"}
+        %i.icon-remove
+        Delete

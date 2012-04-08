@@ -12,6 +12,7 @@ class AnnouncementsController < ApplicationController
     @announcements = Announcement.all.includes(:user)
     @announcements = @announcements.tagged_with(params[:tag]) if params[:tag].present?
     @announcements = @announcements.send params[:type].to_sym if params[:type].present?
+    @announcements = @announcements.with_words *params[:q].split if params[:q].present? 
     @announcements = @announcements.where user_id: current_user.id unless params[:mine].blank? or not current_user
     unless params[:with_me].blank? or not current_user
       conversing_with_me = Conversation.where(interlocutor_id: current_user.id).only(:announcement_id).collect(&:announcement_id).uniq

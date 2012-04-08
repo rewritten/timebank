@@ -13,7 +13,7 @@
             All
         %li.dropdown
           %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
-            %i.icon-arrow-right.icon-white
+            %i.icon-refresh.icon-white
             Type
             %b.caret
           %ul.dropdown-menu
@@ -53,8 +53,8 @@
                 %a{href: "?tag=#{tag}", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                   %i.icon-tag
                   = "#{tag} (#{wt.to_i})"
-      %form.navbar-search
-        %input.search-query{type: "text", placeholder: "Search"}
+      %form.navbar-search{action: "#"}
+        %input.search-query{type: "text", placeholder: "Search", name: "q"}
       - if can? :create, Announcement
         %a.btn.btn-success.pull-right{href: new_announcement_path}
           %i.icon-plus
@@ -65,11 +65,19 @@
     %table.table.table-striped
       %thead
         %tr
-          %th Type
-          %th Tags
+          %th
+            %i.icon-refresh
+            Type
+          %th 
+            %i.icon-tags 
+            Tags
           %th Title
           - if can? :see, :author
-            %th Author
-          %th Created
+            %th
+              %i.icon-user
+              Author
+          %th
+            %i.icon-calendar
+            Created
       %tbody#announcement-list
         = render collection: @announcements, partial: "announcements/announcement_row"
