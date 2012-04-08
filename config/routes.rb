@@ -2,13 +2,17 @@ Timebank::Application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  resources :announcements
+  resources :announcements do
+    resources :transactions
+  end
 
   resources :accounts
 
   resources :users
 
-
+  resources :transactions
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -8,8 +8,14 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif not user.guest?
-      can :manage, Announcement
-      can :participate, Conversation
+      can :read, Announcement
+      can :create, Announcement
+      can :update, Announcement do |announcement|
+        announcement.try(:user) == user
+      end
+      can :destroy, Announcement do |announcement|
+        announcement.try(:user) == user
+      end
       can :see, :author
     else
       can :read, Announcement
@@ -29,10 +35,10 @@ class Ability
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
   end
-  
+
   def authorize!(*args)
     puts "Ability.authorize! #{args.inspect}" if Rails.env.development?
     super
   end
-  
+
 end

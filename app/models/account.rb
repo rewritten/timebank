@@ -1,11 +1,17 @@
+require 'mongoid/denormalize'
+
 class Account
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Denormalize
 
   field :balance, type: Integer, default: 0 # account balance in seconds
   field :last_update_balance, type: DateTime, default: nil
   field :label, type: String, default: ""
+
   belongs_to :user
+  denormalize :name, from: :user
+  
   has_many :transactions_from, class_name: "Transaction", inverse_of: :source
   has_many :transactions_to, class_name: "Transaction", inverse_of: :destination
 

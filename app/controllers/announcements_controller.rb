@@ -9,7 +9,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @announcements = Announcement.all.includes(:user)
+    @announcements = @announcements.includes(:user)
     @announcements = @announcements.tagged_with(params[:tag]) if params[:tag].present?
     @announcements = @announcements.send params[:type].to_sym if params[:type].present?
     @announcements = @announcements.with_words *params[:q].split if params[:q].present? 
@@ -26,7 +26,6 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
-    @announcement = Announcement.find(params[:id])
   end
 
   def new
@@ -34,7 +33,6 @@ class AnnouncementsController < ApplicationController
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
   end
 
   def create
@@ -47,7 +45,6 @@ class AnnouncementsController < ApplicationController
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
     if @announcement.update_attributes(params[:announcement])
       redirect_to(@announcement, :notice => 'Account status was successfully updated.')
     else
@@ -56,7 +53,6 @@ class AnnouncementsController < ApplicationController
   end
 
   def destroy
-    @announcement = Announcement.find(params[:id])
     @announcement.destroy
     redirect_to(announcements_url)
   end

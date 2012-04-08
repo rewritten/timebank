@@ -5,6 +5,9 @@
     = announcement.text
 .span4
   %p
+    %i.icon-refresh
+    = announcement.type
+  %p
     %i.icon-user
     = announcement.user_name
   %p
@@ -22,3 +25,12 @@
       %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => "Are you sure?", "data-method" => "delete"}
         %i.icon-remove
         Delete
+  %form.well.form-inline{action: new_announcement_transaction_path(announcement_id: announcement.id)}
+    - if announcement.type == :offer
+      Pay
+    - else
+      Ask
+    %label.text
+      %input.input-small{type: :text, name: :amount, placeholder: "Amount"}
+      hours
+    %input.btn.btn-success{type: :submit}
