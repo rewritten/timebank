@@ -26,10 +26,14 @@
                   %a{href: '#'}
                     Balance:
                     = current_user.balance_str
+                %li
+                  %a{href: 'https://github.com/ewitten/timebank/issues'}
+                    %i.icon-comment
+                    Bugs and feedback
                 %li.divider
                 %li
                   %a{href: destroy_user_session_path, :"data-method" => :delete, rel: "nofollow"}
-                    %i.icon-eject
+                    %i.icon-off
                     Sign out
             = image_tag(current_user.face, :class => 'face')
           - else
