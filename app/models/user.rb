@@ -16,7 +16,7 @@ class User
     :validatable,
     :omniauthable
   )
-  
+
   ## Database authenticatable
   field :email,              :type => String, :null => false, :default => ""
   field :encrypted_password, :type => String, :null => false, :default => ""
@@ -106,6 +106,17 @@ class User
                    image: access_token.info.image,
                    password: Devise.friendly_token[0,20],
                    info: YAML.dump(access_token))
+    end
+  end
+
+  def self.find_for_open_id(access_token, signed_in_resource=nil)
+    data = access_token.info
+    if user = User.where(email: data["email"]).first
+      user
+    else
+      User.create!(email: data["email"],
+                   password: Devise.friendly_token[0,20],
+                   info: YAML.dump(access_token.to_hash))
     end
   end
 
