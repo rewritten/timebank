@@ -12,38 +12,6 @@
         %ul.nav.pull-right
           %li.divider-vertical
           - if user_signed_in?
-            %li.dropdown
-              %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
-                %i.icon-user.icon-white
-                = current_user
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a{href: '#'}
-                    Role: 
-                    = current_user.role
-                %li
-                  %a{href: '#'}
-                    Balance:
-                    = current_user.balance_str
-                %li
-                  %a{href: 'https://github.com/ewitten/timebank/issues'}
-                    %i.icon-comment
-                    Bugs and feedback
-                %li.divider
-                %li
-                  %a{href: destroy_user_session_path, :"data-method" => :delete, rel: "nofollow"}
-                    %i.icon-off
-                    Sign out
-            = image_tag(current_user.face, :class => 'face')
+            = render "shared/user_menu"
           - else
-            %li.dropdown
-              %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
-                %i.icon-user.icon-white
-                Sign in...
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-                %li
-                  = link_to "Sign in with Google", user_omniauth_authorize_path(:google)
+            = render "shared/user_authenticate"
