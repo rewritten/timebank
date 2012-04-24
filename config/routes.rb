@@ -2,17 +2,20 @@ Timebank::Application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  resources :announcements do
+  scope "(:locale)", :locale => /ca|es|en/ do
+
+    resources :announcements do
+      resources :transactions
+    end
+
+    resources :accounts
+
+    resources :users
+
     resources :transactions
+    
   end
 
-  resources :accounts
-
-  resources :users
-
-  resources :transactions
-  
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -62,6 +65,7 @@ Timebank::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+  match '/:locale' => 'announcements#index'
   root :to => "announcements#index"
 
   # See how all your routes lay out with "rake routes"
