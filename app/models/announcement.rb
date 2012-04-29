@@ -21,9 +21,10 @@ class Announcement
   symbolize :type, within: [:offer, :request], allow_blank: false,
     scopes: true, methods: true
 
-  field :text
+  field :text, type: String
   autotitle on: :text
   full_text_index on: :text
+  before_save :strip_text
 
   scope :open, ->(user) do
     where "conversations" => { "$elemMatch" => { "interlocutor_id" => user.id, "closed" => false }}
@@ -31,7 +32,11 @@ class Announcement
 
   belongs_to :user
   denormalize :name, from: :user
-  
+
   has_many :conversations
+
+  def strip_text
+    text.strip!
+  end
 
 end

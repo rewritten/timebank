@@ -48,7 +48,7 @@ module Mongoid
     def do_text_index
       return unless text_index_on
       t = send(text_index_on).split(word_split)
-      self.full_text_index = self.class.reduce_words(t)
+      self.full_text_index = self.class.reduce_words(t).reject(:blank?)
     end
     
     def as_json(options={})
