@@ -14,17 +14,18 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    puts params.inspect
-    @transaction = Transaction.new(params[:account])
+    puts "============== #{params.inspect} ===="
+    @transaction = Transaction.new(params[:transaction])
     puts @transaction
-    if @transaction.announcement_id
-      announcement = Announcement.find(announcement_id)
-      if announcement.offer?
-        @transaction.destination ||= announcement.user.account
+    if params[:announcement_id]
+      @transaction.announcement = Announcement.find(params[:announcement_id])
+      account = @transaction.announcement.user.account
+      if @transaction.announcement.offer?
+        @transaction.destination ||= account
         @transaction.source ||= current_user.account
         @transaction.confirmed ||= true
       else
-        @transaction.source ||= announcement.user.account
+        @transaction.source ||= account
         @transaction.destination ||= current_user.account
         @transaction.confirmed ||= false
       end
@@ -36,7 +37,12 @@ class TransactionsController < ApplicationController
         @transaction.source.user_id == current_user.id
       end
     end
+    @transaction.save
     redirect_to current_user.account, notice: 'Transaction created.'
+  end
+  
+  def create_from_announcement
+    
   end
 
   # PUT /accounts/1

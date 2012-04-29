@@ -26,6 +26,7 @@
       %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => t(:confirm_popup_question), "data-method" => "delete"}
         %i.icon-remove
         = t ".action.Delete"
-  = form_for [announcement, Transaction.new()], html: {:class => "form-inline"} do |f|
-    = f.text_field :amount, placeholder: "hours", :class => "input-small"
-    = f.submit value: (announcement.type == :offer ? t(".action.Pay") : t(".action.Ask")), :class => "btn btn-success"
+  - unless current_user.id == announcement.user_id
+    = form_for [announcement, Transaction.new()], html: {:class => "form-inline"} do |f|
+      = f.text_field :amount, placeholder: "hours", :class => "input-small"
+      = f.submit value: (announcement.type == :offer ? t(".action.Pay") : t(".action.Ask")), :class => "btn btn-success"

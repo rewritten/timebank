@@ -132,5 +132,5 @@ class User
     end
   end
 
-  include Mongo::Voter
+  # include Mongo::Voter
 end

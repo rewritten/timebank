@@ -8,7 +8,9 @@ Timebank::Application.routes.draw do
       resources :transactions
     end
 
-    resources :accounts
+    resources :accounts do
+      resources :transactions
+    end
 
     resources :users
 

@@ -10,7 +10,7 @@
   %tbody
     - @accounts.each do |account|
       %tr
-        %td= account.user.email
+        %td= account.user_name
         %td= account.balance
         %td= link_to 'Show', account
         %td= link_to 'Edit', edit_account_path(account)
