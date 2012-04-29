@@ -106,16 +106,17 @@ class User
                    name: data.name,
                    image: access_token.info.image,
                    password: Devise.friendly_token[0,20],
-                   info: YAML.dump(access_token))
+                   info: YAML.dump(access_token.to_hash))
     end
   end
 
   def self.find_for_open_id(access_token, signed_in_resource=nil)
     data = access_token.info
-    if user = User.where(email: data["email"]).first
+    if user = User.where(email: data.email).first
       user
     else
-      User.create!(email: data["email"],
+      User.create!(email: data.email,
+                   name: data.name,
                    password: Devise.friendly_token[0,20],
                    info: YAML.dump(access_token.to_hash))
     end
@@ -125,6 +126,8 @@ class User
     super.tap do |user|
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
         user.email = data["email"]
+      elsif data = session["devise.google_data"]
+        user.email = data["info"]["email"]
       end
     end
   end
