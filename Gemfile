@@ -9,14 +9,13 @@ gem 'rails'
 gem 'mongoid'
 gem 'bson_ext'
 
+gem 'rails-i18n'
+
 # auth
 gem 'devise'
 gem "omniauth-facebook"
 gem "omniauth-openid"
 gem "cancan"
-
-# backbone
-gem 'backbone-on-rails'
 
 # model extras
 

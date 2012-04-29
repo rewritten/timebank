@@ -1,11 +1,12 @@
 %tr
   %td
+    - ann_type_string = t "announcements.announcement.type.#{announcement_row.type}"
     - if announcement_row.type == :offer
       %span.label.label-success
-        = announcement_row.type
+        = ann_type_string
     - else
       %span.label.label-info
-        = announcement_row.type
+        = ann_type_string
   %td
     - if announcement_row.tags_array.present?
       - announcement_row.tags_array.each do |tag|
@@ -19,4 +20,4 @@
     %td
       = announcement_row.user_name
   %td
-    = announcement_row.created_at.to_date
+    = l announcement_row.created_at.to_date

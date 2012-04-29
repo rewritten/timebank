@@ -1,7 +1,7 @@
 %section#announcements
 .page-header
   %h1 
-    Announcements
+    = t :Announcements
     %small Offers and requests
 .navbar
   .navbar-inner
@@ -10,21 +10,21 @@
         %li
           %a{href: "?", :"data-remote" => true, :"data-replace" => '#announcement-list'}
             %i.icon-list.icon-white
-            All
+            = t ".filter.All"
         %li.dropdown
           %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
             %i.icon-refresh.icon-white
-            Type
+            = t ".filter.Type"
             %b.caret
           %ul.dropdown-menu
             %li
               %a{href: "?type=offer", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-arrow-right
-                Offers
+                = t ".filter.Offers"
             %li
               %a{href: "?type=request", :"data-remote" => true, :"data-replace" => '#announcement-list'}
                 %i.icon-arrow-left
-                Requests
+                = t ".filter.Requests"
         - if can? :participate, Conversation
           %li.dropdown
             %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
@@ -45,7 +45,7 @@
         %li.dropdown
           %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
             %i.icon-tags.icon-white
-            Tags
+            = t ".filter.Tags"
             %b.caret
           %ul.dropdown-menu
             - Announcement.tags_with_weight.sort.each do |(tag, wt)|
@@ -54,11 +54,11 @@
                   %i.icon-tag
                   = "#{tag} (#{wt.to_i})"
       %form.navbar-search{action: "#"}
-        %input.search-query{type: "text", placeholder: "Search", name: "q"}
+        %input.search-query{type: "text", placeholder: t(".filter.Search"), name: "q"}
       - if can? :create, Announcement
         %a.btn.btn-success.pull-right{href: new_announcement_path}
           %i.icon-plus
-          New Announcement
+          = t ".action.New"
       
 .row
   .span12

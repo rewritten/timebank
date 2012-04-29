@@ -6,19 +6,17 @@
   %ul.dropdown-menu
     %li
       %a{href: '#'}
-        Role: 
-        = current_user.role
+        = "#{t ".role"}: #{t("." + current_user.role.to_s)}"
     %li
       %a{href: '#'}
-        Balance:
-        = current_user.balance_str
+        = "#{t ".balance"}: #{current_user.balance_str}"
     %li
       %a{href: 'https://github.com/rewritten/timebank/issues'}
         %i.icon-comment
-        Bugs and feedback
+        = t ".feedback"
     %li.divider
     %li
       %a{href: destroy_user_session_path, :"data-method" => :delete, rel: "nofollow"}
         %i.icon-off
-        Sign out
+        = t ".sign_out"
 = image_tag(current_user.face, :class => 'face')

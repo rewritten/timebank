@@ -6,7 +6,7 @@
 .span4
   %p
     %i.icon-refresh
-    = announcement.type
+    = t ".type.#{announcement.type}"
   %p
     %i.icon-user
     = announcement.user_name
@@ -20,12 +20,12 @@
     %p
       %a.btn.btn-warning{href: edit_announcement_path(announcement.id)}
         %i.icon-pencil
-        Edit
+        = t ".action.Edit"
   - if can? :delete, announcement
     %p
-      %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => "Are you sure?", "data-method" => "delete"}
+      %a.btn.btn-danger{href: announcement_path(announcement.id), "data-confirm" => t(:confirm_popup_question), "data-method" => "delete"}
         %i.icon-remove
-        Delete
+        = t ".action.Delete"
   = form_for [announcement, Transaction.new()], html: {:class => "form-inline"} do |f|
     = f.text_field :amount, placeholder: "hours", :class => "input-small"
-    = f.submit value: (announcement.type == :offer ? "Pay" : "Ask"), :class => "btn btn-success"
+    = f.submit value: (announcement.type == :offer ? t(".action.Pay") : t(".action.Ask")), :class => "btn btn-success"

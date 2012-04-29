@@ -1,10 +1,9 @@
 %li.dropdown
   %a.dropdown-toggle{href: '#', :"data-toggle" => "dropdown"}
     %i.icon-user.icon-white
-    Sign in...
+    = t(".sign_in") + "..."
     %b.caret
   %ul.dropdown-menu
-    %li
-      = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-    %li
-      = link_to "Sign in with Google", user_omniauth_authorize_path(:google)
+    - [:facebook, :google].each do |provider|
+      %li
+        = link_to t(".with", provider: provider.to_s.capitalize), user_omniauth_authorize_path(provider)

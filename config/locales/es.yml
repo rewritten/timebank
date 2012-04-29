@@ -3,3 +3,4 @@
 
 es:
   hello: "Hola mundo"
+  confirm_popup_question: "¿Estás seguro?"

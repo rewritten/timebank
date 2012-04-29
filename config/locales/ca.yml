@@ -1,2 +1,56 @@
 ca:
   hello: "Hola, món"
+  confirm_popup_question: "Estàs segur?"
+  activerecord:
+    attributes:
+      announcement:
+        user: "Autor"
+  shared:
+    user_authenticate:
+      sign_in: "Identifica't"
+      with: "Identifica't amb %{provider}"
+    user_menu:
+      balance: Balanç
+      feedback: Senyalar
+      sign_out: Desconectar-se
+      role: Rol
+      Guest: de pas
+      User: usuari
+      Admin: administrador
+  announcements:
+    index:
+      filter:
+        All: Tots
+        Type: Tipus
+        Offers: Ofertes
+        Requests: Demandes
+        Tags: Etiquetes
+        Search: Cerca
+      action:
+        New: Nou anunci
+        
+    form:
+      header: Dades de l'anunci
+      legend:
+        tags: Separa les etiquetes amb comes.
+        text: La primera frase (fins al punt) serà el títol. Que sigui curta!
+      action:
+        Save: Desa
+        Back: Enrere
+    announcement:
+      type:
+        request: "Demanda"
+        offer: "Oferta"
+      action:
+        Edit: "Modifica"
+        Delete: "Elimina"
+        Ask: "Demana"
+        Pay: Paga
+  helpers:
+    label:
+      announcement:
+        user: Autor
+        type: Tipus
+        text: Text
+        tags: Etiquetes
+                
