@@ -1,14 +1,14 @@
-# Usage: 
+# Usage:
 # class Blah
 #   include Mongoid::Document
 #   include Mongoid::FullTextIndex
-#   
+#
 #   field :content, type: String
-#   
+#
 #   full_text_index on: :content, split: some_regex, reduce: some_proc
-#   
+#
 # end
-# 
+#
 # Options:
 #   - split:  The arg passed to String#split. Default is a regexp matching
 #             any nonempty sequence of nonword characters.
@@ -16,7 +16,7 @@
 #             to obtain the reduced form. Default is remove accents and other
 #             diacritics
 #
-# The reduce function is applied also to the scope arguments, so they are 
+# The reduce function is applied also to the scope arguments, so they are
 # matched whatever their unreduced form
 #
 
@@ -25,7 +25,7 @@ require 'unaccent'
 module Mongoid
   module FullTextIndex
     extend ActiveSupport::Concern
-    
+
     included do
       class_attribute :text_index_on
       class_attribute :word_reduce
@@ -48,18 +48,18 @@ module Mongoid
     def do_text_index
       return unless text_index_on
       t = send(text_index_on).split(word_split)
-      self.full_text_index = self.class.reduce_words(t).reject(:blank?)
+      self.full_text_index = self.class.reduce_words(t).reject(&:blank?)
     end
-    
+
     def as_json(options={})
       options[:except] ||= []
       options[:except] << :full_text_index unless options[:except].include? :full_text_index
       super(options)
     end
-    
+
 
     module ClassMethods
-      
+
       def reduce_words(*words)
         words = words.flatten
         words = words.collect(&word_reduce) if word_reduce
