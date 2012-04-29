@@ -10,8 +10,6 @@ class Announcement
   include Mongoid::Paranoia
   include Mongoid::Timestamps
   include Mongoid::Symbolize
-  
-  include Mongo::Voteable
 
   include Mongoid::Autotitle
   include Mongoid::Denormalize
@@ -23,6 +21,7 @@ class Announcement
   symbolize :type, within: [:offer, :request], allow_blank: false,
     scopes: true, methods: true
 
+  field :text
   autotitle on: :text
   full_text_index on: :text
 
@@ -34,8 +33,5 @@ class Announcement
   denormalize :name, from: :user
   
   has_many :conversations
-
-  # set points for each vote
-  voteable self, up: +1, down: -1
 
 end

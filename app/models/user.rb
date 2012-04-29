@@ -88,6 +88,7 @@ class User
 
   # cache the redirected image if any
   def face
+    return nil unless image
     Rails.cache.fetch(image) do
       Faraday.head(image).headers[:location] || image
     end

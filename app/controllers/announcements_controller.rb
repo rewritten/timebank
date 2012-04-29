@@ -5,7 +5,7 @@ class AnnouncementsController < ApplicationController
   before_filter :ensure_current_user, only: [:create, :update]
 
   def ensure_current_user
-    params[:announcement][:user_id] = current_user.id unless current_user.admin?
+    params[:announcement][:user_id] = current_user.id unless can? :manage, Announcement
   end
 
   def index
@@ -38,7 +38,7 @@ class AnnouncementsController < ApplicationController
   def create
     @announcement = Announcement.new(params[:announcement])
     if @announcement.save
-      redirect_to(@announcement, :notice => 'Account status was successfully created.')
+      redirect_to(@announcement, :notice => 'Announcement was successfully created.')
     else
       render :action => "new"
     end
@@ -46,7 +46,7 @@ class AnnouncementsController < ApplicationController
 
   def update
     if @announcement.update_attributes(params[:announcement])
-      redirect_to(@announcement, :notice => 'Account status was successfully updated.')
+      redirect_to(@announcement, :notice => 'Announcement was successfully updated.')
     else
       render :action => "edit"
     end
