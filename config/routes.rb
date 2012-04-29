@@ -14,8 +14,10 @@ Timebank::Application.routes.draw do
 
     resources :users
 
+    resource :account
+
     resources :transactions
-    
+
   end
 
   # The priority is based upon order of creation:

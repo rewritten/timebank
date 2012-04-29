@@ -16,7 +16,8 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.xml
   def show
-    @account = Account.find(params[:id])
+    @account = Account.find(params[:id]) if params[:id]
+    redirect_to current_user.account and return unless @account
 
     respond_to do |format|
       format.html # show.html.erb
