@@ -20,7 +20,7 @@ class Account
   def update_balance(options={})
     up_to = options[:up_to] || DateTime.now
     balance = [transactions_to, transactions_from].collect do |transactions|
-      transactions.select(:confirmed?).map(&:amount).inject(0, :+)
+      transactions.select(&:confirmed?).map(&:amount).inject(0, :+)
     end.inject(:-)
     update_attributes balance: balance
   end
