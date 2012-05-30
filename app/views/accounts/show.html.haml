@@ -27,6 +27,13 @@
         %td= transaction.source_user_name
         %td= transaction.destination_user_name
         %td= transaction.announcement_title
-        %td= transaction.confirmed?
+        - if transaction.confirmed?
+          %td
+            %i.icon-ok
+        - else
+          %td
+            = form_tag account_transaction_confirm_path(@account, transaction) do
+              %input.btn.btn-mini.btn-danger{:type => "submit", :value => t(".confirm")}
+
 
   

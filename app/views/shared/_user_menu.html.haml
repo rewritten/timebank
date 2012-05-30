@@ -10,6 +10,8 @@
     %li
       %a{href: "/account"}
         = "#{t ".balance"}: #{current_user.balance_str}"
+        - if current_user.account.transactions_from.where(:confirmed => false).exists?
+          %span.badge.badge-warning= current_user.account.transactions_from.where(:confirmed => false).count
     %li
       %a{href: 'https://github.com/rewritten/timebank/issues'}
         %i.icon-comment

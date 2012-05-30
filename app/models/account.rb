@@ -8,6 +8,8 @@ class Account
   field :balance, type: Integer, default: 0 # account balance in seconds
   field :last_update_balance, type: DateTime, default: nil
   field :label, type: String, default: ""
+  field :type
+  field :owner_name
 
   belongs_to :user
   denormalize :name, from: :user

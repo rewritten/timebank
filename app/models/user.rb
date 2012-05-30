@@ -59,6 +59,7 @@ class User
   field :notes, type: String
 
   ROLES = %w(Guest User Admin)
+  scope :guest, where(:role => "Guest")
 
   ADMIN = PRIVATE_CONFIG[Rails.env]["admin"] rescue []
 

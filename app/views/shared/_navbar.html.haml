@@ -7,7 +7,12 @@
         - if can? :read, Account
           %li= link_to "Accounts", accounts_path
         - if can? :read, Users
-          %li= link_to "Users", users_path
+          %li
+            %a{:href => users_path}
+              = t("Users")
+              - if User.guest.exists?
+                %span.badge.badge-warning= User.guest.count
+  
       .nav-collapse
         %ul.nav.pull-right
           %li.divider-vertical

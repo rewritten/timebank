@@ -17,6 +17,9 @@ ca:
       Guest: de pas
       User: usuari
       Admin: administrador
+  accounts:
+    show:
+      confirm: Confirmar
   announcements:
     index:
       filter:

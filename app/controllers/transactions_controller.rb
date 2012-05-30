@@ -48,7 +48,7 @@ class TransactionsController < ApplicationController
   # PUT /accounts/1
   # PUT /accounts/1.xml
   def update
-    @account = Account.find(params[:id])
+    @account = Transaction.find(params[:id])
 
     respond_to do |format|
       if @account.update_attributes(params[:account])
@@ -61,8 +61,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  # DELETE /accounts/1
-  # DELETE /accounts/1.xml
   def destroy
     @account = Account.find(params[:id])
     @account.destroy
@@ -72,4 +70,12 @@ class TransactionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def confirm
+    @transaction = Transaction.find(params[:transaction_id])
+    @account = Account.find(params[:account_id])
+    @transaction.update_attributes!(:confirmed => true)
+    redirect_to(account_url(@account))
+  end
+    
 end

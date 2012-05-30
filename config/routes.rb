@@ -9,7 +9,9 @@ Timebank::Application.routes.draw do
     end
 
     resources :accounts do
-      resources :transactions
+      resources :transactions do
+        post :confirm
+      end
     end
 
     resources :users
