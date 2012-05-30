@@ -6,6 +6,7 @@ Timebank::Application.routes.draw do
 
     resources :announcements do
       resources :transactions
+      resources :comments
     end
 
     resources :accounts do

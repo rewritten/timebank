@@ -30,7 +30,8 @@ gem "symbolize", :require => "symbolize/mongoid"
 
 
 # see: https://github.com/mgolovnia/mongoid_commentable
-gem 'mongoid_commentable'
+# gem 'mongoid_commentable'
+# got to embed it because controller must inherit from the app controller (for i18n etc)
 
 gem 'voteable_mongo'
 

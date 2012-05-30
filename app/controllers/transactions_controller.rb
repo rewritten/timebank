@@ -75,6 +75,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:transaction_id])
     @account = Account.find(params[:account_id])
     @transaction.update_attributes!(:confirmed => true)
+    @transaction.update_accounts
     redirect_to(account_url(@account))
   end
     

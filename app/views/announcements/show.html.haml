@@ -1,3 +1,4 @@
-%p#notice= notice
+- if notice.present?
+  .alert.alert-success#notice= t(notice)
 .row
   = render @announcement

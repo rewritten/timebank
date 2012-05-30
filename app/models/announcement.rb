@@ -10,6 +10,7 @@ class Announcement
   include Mongoid::Paranoia
   include Mongoid::Timestamps
   include Mongoid::Symbolize
+  include Mongoid::Commentable
 
   include Mongoid::Autotitle
   include Mongoid::Denormalize

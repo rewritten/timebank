@@ -49,6 +49,8 @@ ca:
         Delete: "Elimina"
         Ask: "Demana"
         Pay: Paga
+        Comment: Deixa un comentari
+      Leave a comment: Deixa un comentari
   helpers:
     label:
       announcement:
@@ -56,4 +58,4 @@ ca:
         type: Tipus
         text: Text
         tags: Etiquetes
-                
+  Comment was successfully created: Comentari enviat correctament

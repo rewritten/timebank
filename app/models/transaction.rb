@@ -20,7 +20,7 @@ class Transaction
 
   def update_accounts
     [source, destination].each do |account|
-      account.update_balance(up_to: created_at) if account
+      account.update_balance if account
     end
   end
 
