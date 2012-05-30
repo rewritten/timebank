@@ -1,4 +1,4 @@
-require 'mongoid/commentable'
+require 'mongoid/commentable/comment'
 
 class Comment
   include Mongoid::Document

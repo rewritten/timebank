@@ -7,18 +7,19 @@
     %fieldset
       = f.text_area :text, rows: 3, :class => "input-xlarge"
       = f.submit value: t(".action.Comment"), :class => "btn btn-success"
-  %table.table.table-condensed
-    - announcement.comments_list.each do |comment|
-      %tr
-        %td
-          %span.label= comment.username
-        %td= comment.text
-        %td= l comment.created_at.to_date
-        %td
-          - if can?(:manage, comment) or current_user.id == comment.user_id
-            %a{href: announcement_comment_path(announcement.id, comment.id), "data-confirm" => t(:confirm_popup_question), "data-method" => "delete"}
-              &times;
-  
+  - unless announcement.comments_list.empty?
+    %table.table.table-condensed
+      - announcement.comments_list.each do |comment|
+        %tr
+          %td
+            %span.label= comment.username
+            %br
+            = l comment.created_at.to_date
+          %td= comment.text
+          %td
+            - if can?(:manage, comment) or current_user.id == comment.user_id
+              %a{href: announcement_comment_path(announcement.id, comment.id), "data-confirm" => t(:confirm_popup_question), "data-method" => "delete"}
+                &times;
 .span4
   %p
     %i.icon-refresh
