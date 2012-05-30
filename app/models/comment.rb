@@ -1,7 +1,9 @@
+require 'mongoid/commentable'
+
 class Comment
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid_Commentable::Comment
+  include Mongoid::Commentable::Comment
   attr_accessible :text, :author
   field :text, :type => String
   field :author, :type => String

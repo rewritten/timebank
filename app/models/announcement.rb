@@ -1,3 +1,4 @@
+require 'mongoid/commentable'
 require 'mongoid/autotitle'
 require 'mongoid/denormalize'
 require 'mongoid/full_text_index'
